@@ -39,11 +39,28 @@ function maxPairwiseProductFast(A) {
     return A[index1] * A[index2];
 }
 
-// checkComplexity([MaxPairwiseProductNaive, maxPairwiseProductFast]);
-// stressTest([MaxPairwiseProductNaive, maxPairwiseProductFast], 10, 20,true);
-functionAnalyzer(
+// Call the functionAnalyzer to analyze the complexity and perform stress testing
+const { complexityResults, stressTestResults } = functionAnalyzer(
     [MaxPairwiseProductNaive, maxPairwiseProductFast],
-    100,
-    10,
-    true
+    10, // Number of stress test iterations
+    10000, // Maximum size of the stress test input
+    true, // Set this to 'true' to log elapsed times during stress testing
+    [10, 100, 1000, 10000] // Input sizes for complexity analysis
 );
+
+// Display complexity results
+console.log("Complexity Results:");
+console.dir(complexityResults, { depth: null });
+
+// Display stress test results
+console.log("Stress Test Results:");
+console.log(stressTestResults);
+
+// Calculate and display the total elapsed time for each function
+const totalElapsedTimes = stressTestResults.reduce((acc, result) => {
+    const funcName = result.funcName || "anonymous";
+    acc[funcName] = (acc[funcName] || 0) + result.elapsedMs;
+    return acc;
+}, {});
+
+console.log("Total Elapsed Times:", totalElapsedTimes);
